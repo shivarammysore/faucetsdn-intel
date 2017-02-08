@@ -1,0 +1,11 @@
+## Replace IFACE_NAME with real interface value
+## This file needs to be placed under /etc/network/interfaces.d/
+## as enp2s0 or enp2s0.2001 or enp2s0.2004 or enp3s0 or enp5s0.  
+## Replace globally in this file IFACE_NAME with enp2s0 or enp2s0.2004
+## or enp3s0 or enp5s0 as per above example
+
+auto IFACE_NAME
+iface IFACE_NAME inet manual
+  up ip link set dev $IFACE up
+  down ip link set dev $IFACE down
+
