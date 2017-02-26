@@ -15,6 +15,13 @@ apt-get update
 
 apt-get install software-properties-common git wget curl unzip bzip2 screen minicom make gcc dpdk dpdk-dev dpdk-doc dpdk-igb-uio-dkms openvswitch-common openvswitch-switch openvswitch-switch-dpdk python-openvswitch openvswitch-pki openvswitch-testcontroller python2.7 libpython2.7 python-pip linux-image-extra-$(uname -r) linux-image-extra-virtual apt-transport-https ca-certificates
 
+## Optionally add sensors package for finding out temperature
+apt-get install hwinfo lm-sensors  hddtemp
+service kmod start
+sensors-detect --auto
+sensors
+hddtemp /dev/sda  
+
 # Add Docker’s official GPG key
 curl -fsSL https://yum.dockerproject.org/gpg | apt-key add -
 
