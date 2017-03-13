@@ -33,4 +33,16 @@ systemctl daemon-reload
 systemctl start grafana-server
 systemctl status grafana-server
 
+cp ../etc/systemd/system/* /etc/systemd/system/
+cp ../usr/local/bin/start*sh /usr/local/bin/
+chmod +x /usr/local/bin/start-faucet.sh
+chmod +x /usr/local/bin/start-gauge.sh
+systemctl enable faucet
+systemctl enable gauge
+
+systemctl start faucet
+systemctl start gauge
+
+systemctl status faucet
+systemctl status gauge
 
