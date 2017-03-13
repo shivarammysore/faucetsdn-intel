@@ -1,0 +1,33 @@
+https://docs.docker.com/engine/reference/commandline/run/
+
+Full container capabilities (–privileged)
+
+$ docker run -t -i --privileged ubuntu bash
+root@50e3f57e16e6:/# mount -t tmpfs none /mnt
+root@50e3f57e16e6:/# df -h
+Filesystem      Size  Used Avail Use% Mounted on
+none            1.9G     0  1.9G   0% /mnt
+
+
+Start a stopped Container
+docker start <CONTAINER ID>
+
+Set working directory (-w)
+
+$ docker  run -w /path/to/dir/ -i -t  ubuntu pwd
+The -w lets the command being executed inside directory given, here /path/to/dir/. If the path does not exist it is created inside the container.
+
+Docker and SSH - debugging:
+https://jpetazzo.github.io/2014/06/23/docker-ssh-considered-evil/
+
+Connect a container to a network (–network)
+
+docker run -itd --network=my-net --ip=10.10.9.75 busybox
+
+Restart policies (–restart)
+$ docker run --restart=always redis
+
+This will run the redis container with a restart policy of always so that if the container exits, Docker will restart it.
+
+
+

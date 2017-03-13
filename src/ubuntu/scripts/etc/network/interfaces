@@ -10,3 +10,4 @@ iface lo inet loopback
 # The primary network interface
 auto enp1s0
 iface enp1s0 inet dhcp
+iface enp1s0 inet6 dhcp

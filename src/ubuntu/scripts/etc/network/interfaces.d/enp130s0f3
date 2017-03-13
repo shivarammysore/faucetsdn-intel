@@ -1,0 +1,5 @@
+auto enp130s0f3 
+iface enp130s0f3 inet manual
+  up ip link set dev $IFACE up
+  down ip link set dev $IFACE down
+

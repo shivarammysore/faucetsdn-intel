@@ -53,8 +53,8 @@ echo "Verify that the IP address is really configured in the container ..."
 docker exec -ti faucet0 ip a | grep 'mtu|inet'
 
 echo "verify IP route in the container ..."
-docker exec -ti container0 ip route
+docker exec -ti faucet0 ip route
 
 echo "verify IPv6 route ..."
-docker exec -ti container0 ip -6 route
+docker exec -ti faucet0 ip -6 route
 

@@ -1,0 +1,12 @@
+auto enp1s0f1
+iface enp1s0f1 inet dhcp
+        up ip link set dev $IFACE up
+        down ip link set dev $IFACE down
+
+iface enp1s0f1 inet6 dhcp
+        up ip link set dev $IFACE up
+        down ip link set dev $IFACE down
+
+#auto vlan218
+#iface vlan218 inet manual
+#        vlan-raw-device enp1s0f1

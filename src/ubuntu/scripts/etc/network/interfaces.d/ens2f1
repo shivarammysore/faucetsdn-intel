@@ -1,0 +1,5 @@
+auto ens2f1
+iface ens2f1 inet manual
+  up ip link set dev $IFACE up
+  down ip link set dev $IFACE down
+

@@ -9,7 +9,7 @@ echo "Customizing Docker Bridge"
 echo -e "\nDOCKER_OPTS=\"--config-file=/etc/docker/daemon.json\"" >> /etc/default/docker
 cp ../etc/docker/daemon.json /etc/docker/daemon.json
 
-service restart docker
+systemctl restart docker
 
 echo "Checking Experimental flag on Docker ..."
 docker version -f '{{.Server.Experimental}}'
