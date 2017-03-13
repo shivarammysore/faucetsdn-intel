@@ -37,6 +37,9 @@ cp ../etc/systemd/system/* /etc/systemd/system/
 cp ../usr/local/bin/start*sh /usr/local/bin/
 chmod +x /usr/local/bin/start-faucet.sh
 chmod +x /usr/local/bin/start-gauge.sh
+
+cp ../etc/ryu/faucet/*.yaml /etc/ryu/faucet/
+
 systemctl enable faucet
 systemctl enable gauge
 
@@ -46,3 +49,5 @@ systemctl start gauge
 systemctl status faucet
 systemctl status gauge
 
+echo "Edit /etc/ryu/faucet/faucet.yaml and /etc/ryu/gauge.yaml accordingly"
+echo "On changes to *yaml files, issue systemclt restart <faucet | gauge>"

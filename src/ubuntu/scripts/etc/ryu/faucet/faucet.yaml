@@ -1,0 +1,34 @@
+version: 2
+vlans:
+    500:
+        name: "clock"
+        unicast_flood: True
+dps:
+    ovs-intelsdn-1:
+        dp_id: 0x0000a0369fd56418
+        hardware: "Open vSwitch"
+        interfaces:
+            1:
+                name: "enp130s0f0"
+                native_vlan: 500
+            2:
+                name: "enp130s0f1"
+                native_vlan: 500
+            3:
+                name: "enp130s0f2"
+                native_vlan: 500
+            4:
+                name: "enp130s0f3"
+                native_vlan: 500
+            5:
+                name: "ens2f0"
+                native_vlan: 500
+            6:
+                name: "ens2f1"
+                native_vlan: 500
+            7:
+                name: "ens2f2"
+                native_vlan: 500
+            8:
+                name: "ens2f3"
+                native_vlan: 500
