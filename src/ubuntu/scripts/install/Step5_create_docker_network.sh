@@ -25,7 +25,7 @@ docker network ls
 # Dual Stack IPv4 IPv6 Macvlan Bridge Mode
 # Macvlan Bridge mode, 802.1q trunk, VLAN ID: 218, Multi-Subnet, Dual Stack
 # Create bridge subnet with a gateway of x.x.x.1:
-docker network  create  -d macvlan --subnet=192.168.218.0/24 --gateway=192.168.218.1 --subnet=2001:db8:babe:cafe::/64 --gateway=2001:db8:babe:cafe::1 -o parent=enp1s0.218 --ipv6 -o macvlan_mode=bridge macvlan218
+docker network  create  -d macvlan --subnet=192.168.218.0/24 --gateway=192.168.218.1 --subnet=2001:db8:babe:cafe::/64 --gateway=2001:db8:babe:cafe::1 -o parent=enp1s0f1.218 --ipv6 -o macvlan_mode=bridge macvlan218
 
 echo "Verify that the macvlan218 network was created ...."
 docker network ls
@@ -34,7 +34,7 @@ echo "macvlan218 network details ..."
 docker network inspect macvlan218
 
 echo "spin up the faucet container ..."
-docker run --name='faucet0' --hostname='faucet0' --net=macvlan218 --detach=true -v /etc/ryu/faucet:/etc/ryu/faucet/ -v /var/log/ryu/faucet/:/var/log/ryu/faucet/ -p 6653:6653  faucet/faucet:latest
+docker run --name='container0' --hostname='faucet0' --net=macvlan218 --detach=true -v /etc/ryu/faucet:/etc/ryu/faucet/ -v /var/log/ryu/faucet/:/var/log/ryu/faucet/ -p 6653:6653  faucet/faucet:latest
 
 echo "DEBUG NOTE:: docker [logs | attach] faucet0"
 echo "DEBUG NOTE:: docker inspect faucet0"

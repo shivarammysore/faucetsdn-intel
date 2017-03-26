@@ -8,6 +8,8 @@ if [ "$EUID" -ne 0 ]
 fi
 
 ENV=${1:-ovswitch}
+#DPDK_DIR=/usr/local/src/dpdk-stable-16.11.1/tools
+DPDK_DIR=/usr/share/dpdk/tools
 
 ## Function to get the property value for the provided key
 function prop {
@@ -37,27 +39,14 @@ if [ $(prop 'DPDK') = "false" ] ; then
 
     else
       echo "This script sets up OVS Switch *with* DPDK support on this Linux box"
-      modprobe uio
-      modprobe igb_uio
+      modprobe vfio-pci
+      lsmod | grep vfio
       echo "Listing Network devices using DPDK-compatible driver"
-      /usr/share/dpdk/tools/dpdk_nic_bind.py --status
-
+      $DPDK_DIR/dpdk-devbind.py --status
+      # For reading clarity, explicit PCI addresses are used.
+      # One could prop these values from the properties file
       echo "Perform the dpdk_nic_bind with the PCI IDs to be unbounded from Linux kernel."
-      /usr/share/dpdk/tools/dpdk-devbind.py --bind=igb_uio 0000:02:00.0 0000:03:00.0 0000:05:00.0
-
-      update-alternatives --set ovs-vswitchd /usr/lib/openvswitch-switch-dpdk/ovs-vswitchd-dpdk
-
-      if [ ! -f /etc/openvswitch/conf.db ] ; then
-        ovsdb-tool create /etc/openvswitch/conf.db /usr/share/openvswitch/vswitch.ovsschema
-      fi
-
-      modprobe uio
-      modprobe igb_uio
-      echo "Listing Network devices using DPDK-compatible driver"
-      /usr/share/dpdk/tools/dpdk_nic_bind.py --status
-
-      echo "Perform the dpdk_nic_bind with the PCI IDs to be unbounded from Linux kernel."
-      /usr/share/dpdk/tools/dpdk-devbind.py --bind=igb_uio 0000:02:00.0 0000:03:00.0 0000:05:00.0
+      $DPDK_DIR/dpdk-devbind.py --bind=vfio-pci 0000:82:00.0 0000:82:00.1 0000:82:00.2 0000:82:00.3 0000:83:00.0 0000:83:00.1 0000:83:00.2 0000:83:00.3
 
       update-alternatives --set ovs-vswitchd /usr/lib/openvswitch-switch-dpdk/ovs-vswitchd-dpdk
 
@@ -79,11 +68,10 @@ if [ $(prop 'DPDK') = "false" ] ; then
       for ((j=0,i=1;i<=$(countprop 'HOST_IFACE');i++,j++));
       do
         IFACE=HOST_IFACE_$i
-        ovs-vsctl add-port $(prop 'BRIDGE_NAME') dpdk$j -- set Interface dpdk$j type=dpdk
+        ovs-vsctl add-port $(prop 'BRIDGE_NAME') dpdk-p$j -- set Interface dpdk-p$j type=dpdk options:dpdk-devargs=$(countprop 'HOST_IFACE_PCI')
         ## Zero out your host interfaces that are attached to the bridge
-        ip addr add 0 dev dpdk$j
+        ip addr add 0 dev dpdk-p$j
       done
-
 fi
 
 

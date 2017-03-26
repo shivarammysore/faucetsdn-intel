@@ -7,13 +7,18 @@ if [ "$EUID" -ne 0 ]
   exit
 fi
 
+#DPDK_DIR=/usr/local/src/dpdk-stable-16.11.1/tools
+DPDK_DIR=/usr/share/dpdk/tools
+
+modprobe vfio
 modprobe uio
 modprobe igb_uio
 lsmod | egrep 'uio'
-/bin/echo -en "pci\t0000:04:00.1\tuio_pci_generic\npci\t0000:05:00.0\tigb_uio" >> /etc/dpdk/interfaces
+lsmod | egrep 'vfio'
+/bin/echo -en "pci\t0000:04:00.0\tvfio-pci\npci\t0000:04:00.1\tuio_pci_generic\npci\t0000:05:00.0\tigb_uio" >> /etc/dpdk/interfaces
 
 echo "Listing Network devices using DPDK-compatible driver"
-/usr/share/dpdk/tools/dpdk_nic_bind.py --status
+$DPDK_DIR/dpdk-devbind.py --status
 
 echo "Setting environment variable DB_SOCK in /etc/environment file ..."
 /bin/echo -en "DB_SOCK=/var/run/openvswitch/db.sock" >> /etc/environment
@@ -53,7 +58,7 @@ echo " to reserve 4 huge pages of 1G size - add parameters: default_hugepagesz=1
 echo " For 2 CPU cores, Isolate CPU cores which will be used for DPDK - add parameters: isolcpus=2"
 echo " To use VFIO - add parameters: iommu=pt intel_iommu=on"
 echo "Note: If you are not sure about something, leave it asis!!"
-echo "GRUB_CMDLINE_LINUX_DEFAULT=\"quiet default_hugepagesz=1G hugepagesz=1G hugepages=4\""
+echo "GRUB_CMDLINE_LINUX_DEFAULT=\"quiet intel_iommu=on iommu=pt default_hugepagesz=1G hugepagesz=1G hugepages=4\""
 echo ""
 echo "After changing /etc/default/grub, run command: update-grub"
 echo "reboot to take effect."
