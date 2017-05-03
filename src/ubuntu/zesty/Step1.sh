@@ -1,4 +1,5 @@
 #!/bin/sh
+## @author: Shivaram.Mysore@gmail.com
 
 ## Check if user is root
 if [ "$EUID" -ne 0 ]

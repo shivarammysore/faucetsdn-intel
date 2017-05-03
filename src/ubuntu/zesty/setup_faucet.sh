@@ -1,5 +1,6 @@
 #!/bin/sh
 ## @author: Shivaram.Mysore@gmail.com
+
 ## Check if user is root
 if [ "$EUID" -ne 0 ]
       then echo "Run $0 script as root after a fresh install of Ubuntu 16.10"
@@ -34,12 +35,12 @@ systemctl daemon-reload
 systemctl start grafana-server
 systemctl status grafana-server
 
-cp ../etc/systemd/system/* /etc/systemd/system/
+cp ../scripts/etc/systemd/system/* /etc/systemd/system/
 cp ../usr/local/bin/start*sh /usr/local/bin/
 chmod +x /usr/local/bin/start-faucet.sh
 chmod +x /usr/local/bin/start-gauge.sh
 
-cp ../etc/ryu/faucet/*.yaml /etc/ryu/faucet/
+cp ../scripts/etc/ryu/faucet/*.yaml /etc/ryu/faucet/
 
 systemctl enable faucet
 systemctl enable gauge
