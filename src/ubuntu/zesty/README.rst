@@ -27,3 +27,13 @@ Faucet SDN Controller
 =====================
 
 `Faucet SDN Controller <http://FaucetSDN.org>`_ can be setup on a different box or on the same box as the one used for OVS. The script `setup_faucet.sh <setup_faucet.sh>`_ can be run to install and configure the same.  Again, please review the script before running the same.
+
+Securing OVS <-> Faucet Openflow Control Channel
+================================================
+
+Openflow control channel can be secured via TLS.  `setup_ovs_pki.sh <setup_ovs_pki.sh>`_ provides the necessary steps to accomplish the same.
+
+Questions
+=========
+
+For any issues with the scripts or documentation, please feel free to raise issues on this GitHub page.  Pull requests are also welcome.
