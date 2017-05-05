@@ -18,6 +18,7 @@ pip install --upgrade pip
 ## Note: ryu-faucet will be replaced by faucet and faucetapps
 pip install ryu couchapp
 pip install git+https://github.com/reannz/faucet.git
+pip install git+https://github.com/faucetsdn/faucetapps.git
 
 echo "deb https://packagecloud.io/grafana/stable/debian/ jessie main" >> /etc/apt/sources.list
 curl https://packagecloud.io/gpg.key | sudo apt-key add -
