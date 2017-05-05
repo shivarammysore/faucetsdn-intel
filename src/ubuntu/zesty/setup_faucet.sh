@@ -9,14 +9,15 @@ fi
 
 apt-get update
 
-apt-get install software-properties-common git wget curl unzip bzip2 screen minicom make python2.7 libpython2.7 python-pip linux-image-extra-$(uname -r) apt-transport-https ca-certificates
+apt-get install -y software-properties-common git wget curl unzip bzip2 screen minicom make python3 libpython3 python3-pip linux-image-extra-$(uname -r) apt-transport-https ca-certificates
 
 # enable IPv6 
 sysctl net.ipv6.conf.all.disable_ipv6=0
 pip install --upgrade pip
 
 ## Note: ryu-faucet will be replaced by faucet and faucetapps
-pip install ryu faucet faucetapps ryu-faucet couchapp
+pip install ryu couchapp
+pip install git+https://github.com/reannz/faucet.git
 
 echo "deb https://packagecloud.io/grafana/stable/debian/ jessie main" >> /etc/apt/sources.list
 curl https://packagecloud.io/gpg.key | sudo apt-key add -
@@ -36,7 +37,7 @@ systemctl start grafana-server
 systemctl status grafana-server
 
 cp ../scripts/etc/systemd/system/* /etc/systemd/system/
-cp ../usr/local/bin/start*sh /usr/local/bin/
+cp start*sh /usr/local/bin/
 chmod +x /usr/local/bin/start-faucet.sh
 chmod +x /usr/local/bin/start-gauge.sh
 
