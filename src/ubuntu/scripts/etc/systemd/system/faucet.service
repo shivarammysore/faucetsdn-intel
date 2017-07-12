@@ -1,12 +1,13 @@
 [Unit]
-Description="FAUCET OpenFlow switch controller"
+Description="Faucet OpenFlow switch controller"
 After=network-online.target
 Wants=network-online.target
 
 [Service]
-ExecStart=/usr/local/bin/start-faucet.sh
+ExecStart=/usr/local/bin/ryu-manager --config-file=/etc/ryu/ryu.conf --ofp-tcp-listen-port=6653 faucet.faucet
+#ExecStart=/usr/local/bin/ryu-manager --config-file=/etc/ryu/ryu.conf --ctl-privkey /etc/ryu/cntlr-privkey.pem --ctl-cert /etc/ryu/cntlr-cert.pem --ca-certs /etc/ryu/switchca-cert.pem --ofp-ssl-listen-port=6653 faucet.faucet
+ExecReload=/bin/kill -HUP $MAINPID
 Restart=always
 
 [Install]
 WantedBy=multi-user.target
-
