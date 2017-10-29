@@ -23,7 +23,7 @@ curl https://packages.wand.net.nz/keyring.gpg -o /etc/apt/trusted.gpg.d/wand.gpg
 apt-get update
 
 # Install utilities and packages needed
-apt-get install software-properties-common git wget curl unzip bzip2 screen minicom make gcc dpdk dpdk-dev dpdk-doc dpdk-igb-uio-dkms openvswitch-common openvswitch-switch python-openvswitch openvswitch-pki openvswitch-testcontroller openvswitch-switch-dpdk linux-image-extra-$(uname -r) linux-image-extra-virtual apt-transport-https ca-certificates vlan
+apt-get --assume-yes install software-properties-common git wget curl unzip bzip2 screen minicom make gcc dpdk dpdk-dev dpdk-doc dpdk-igb-uio-dkms openvswitch-common openvswitch-switch python-openvswitch openvswitch-pki openvswitch-testcontroller openvswitch-switch-dpdk linux-image-extra-$(uname -r) linux-image-extra-virtual apt-transport-https ca-certificates vlan libnss3-tools
 
 # Make sure to set Python3 as the version of python to use
 update-alternatives --install /usr/bin/python python /usr/bin/python2.7 2
