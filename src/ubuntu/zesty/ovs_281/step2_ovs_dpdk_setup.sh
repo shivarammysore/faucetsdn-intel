@@ -6,6 +6,13 @@
 ## Note: This script does not take into account exceptions raised during its run
 ##       Users must watch the output and apply necessary fixes.
 
+# After a reboot of the Ubuntu system, we have to manually bind the DPDK
+# interfaces.  In my minimal testing, when I did a binding on a existing switch
+# which already had interfaces, I had some issues one time. Hence, as it does not
+# hurt, I just remove the bridge and re-create everything on startup just to be
+# sure.  This script can be used again to setup the DPDK enabled OVS bridge
+# after a reboot/shutdown.
+
 ### OVS script Configuration Settings ###
 
 IPV6=false
@@ -75,7 +82,10 @@ DATAPATH_ID=fa:ce:de:af:ca:fe:cc:ff
 ## Check if user is root
 ROOTUID="0"
 if [ "$(id -u)" -ne "$ROOTUID" ]; then
-   echo "Run $0 script as root after a fresh install of Ubuntu 17.04 with OVS 2.8.1 packages installed"
+   echo "Run $0 script as root after a fresh install of Ubuntu 17.04 with "
+   echo "  OVS 2.8.1 packages installed"
+   echo " OR"
+   echo "After a reboot/shutdown of this OVS"
    exit 1
 fi
 
@@ -84,6 +94,8 @@ dpdk-devbind --status-dev net |  egrep -i --color drv=
 ## In this case, igb and igb_uio are the drivers.  Hence, check if those modules are loaded
 modprobe igb_uio
 lsmod | grep igb
+
+ovs-vsctl del-br $BRIDGE_NAME
 
 echo "This script sets up OVS Switch *with* DPDK support on this Linux box"
 
@@ -95,7 +107,6 @@ echo "This script sets up OVS Switch *with* DPDK support on this Linux box"
 ovs-vsctl --no-wait set Open_vSwitch . other_config:dpdk-socket-mem="1024,1024"
 ovs-vsctl --no-wait set Open_vSwitch . other_config:dpdk-init=true
 
-ovs-vsctl del-br $BRIDGE_NAME
 ovs-vsctl add-br $BRIDGE_NAME -- set bridge $BRIDGE_NAME datapath_type=netdev protocols=OpenFlow13 other_config:datapath-id=$DATAPATH_ID
 ip addr add $BRIDGE_IPv4 dev $BRIDGE_NAME
 ovs-vsctl list-br
