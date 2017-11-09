@@ -51,7 +51,7 @@ echo "pci     0000:05:00.3    igb_uio" >> /etc/dpdk/interfaces
 echo "pci     0000:81:00.0    igb_uio" >> /etc/dpdk/interfaces
 echo "pci     0000:81:00.1    igb_uio" >> /etc/dpdk/interfaces
 echo "pci     0000:81:00.2    igb_uio" >> /etc/dpdk/interfaces
-#echo "pci     0000:81:00.3    igb_uio" >> /etc/dpdk/interfaces
+echo "pci     0000:81:00.3    igb_uio" >> /etc/dpdk/interfaces
 
 
 echo "Setting environment variable DB_SOCK in /etc/environment file ..."
