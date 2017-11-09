@@ -12,7 +12,7 @@ if [ "$EUID" -ne 0 ]
     exit
 fi
 
-apt-get install python3 python3-pip apt-transport-https
+apt-get --assume-yes install python3 python3-pip apt-transport-https
 
 # enable IPv6
 sysctl net.ipv6.conf.all.disable_ipv6=0
@@ -40,9 +40,19 @@ echo "vfio-pci" >> /etc/modules
 echo "uio_pci_generic" >> /etc/modules
 
 # Enable DPDK interfaces
-echo "pci	0000:04:00.0	vfio-pci" >> /etc/dpdk/interfaces
-echo "pci	0000:04:00.1	uio_pci_generic" >> /etc/dpdk/interfaces
-echo "pci	0000:05:00.0	igb_uio" >> /etc/dpdk/interfaces
+echo "pci     0000:04:00.0    vfio-pci" >> /etc/dpdk/interfaces
+echo "pci	    0000:04:00.1    uio_pci_generic" >> /etc/dpdk/interfaces
+echo "## Interfaces on this machine that needs to be loaded on (re)boot" >> /etc/dpdk/interfaces
+echo "pci     0000:03:00.1    igb_uio" >> /etc/dpdk/interfaces
+echo "pci     0000:05:00.0    igb_uio" >> /etc/dpdk/interfaces
+echo "pci     0000:05:00.1    igb_uio" >> /etc/dpdk/interfaces
+echo "pci     0000:05:00.2    igb_uio" >> /etc/dpdk/interfaces
+echo "pci     0000:05:00.3    igb_uio" >> /etc/dpdk/interfaces
+echo "pci     0000:81:00.0    igb_uio" >> /etc/dpdk/interfaces
+echo "pci     0000:81:00.1    igb_uio" >> /etc/dpdk/interfaces
+echo "pci     0000:81:00.2    igb_uio" >> /etc/dpdk/interfaces
+#echo "pci     0000:81:00.3    igb_uio" >> /etc/dpdk/interfaces
+
 
 echo "Setting environment variable DB_SOCK in /etc/environment file ..."
 /bin/echo -en "DB_SOCK=/var/run/openvswitch/db.sock" >> /etc/environment
