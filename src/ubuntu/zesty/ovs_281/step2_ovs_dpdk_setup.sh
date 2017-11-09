@@ -6,10 +6,16 @@
 ## Note: This script does not take into account exceptions raised during its run
 ##       Users must watch the output and apply necessary fixes.
 
-# After a reboot of the Ubuntu system, we have to manually bind the DPDK
-# interfaces.  In my minimal testing, when I did a binding on a existing switch
-# which already had interfaces, I had some issues one time. Hence, as it does not
-# hurt, I just remove the bridge and re-create everything on startup just to be
+## To Bind DPDK interfaces persistently, edit /etc/dpdk/interfaces file to
+## something like this: (per settings in this example)
+
+## After reboot, don't forget to check if interfaces are bound to proper drivers.
+# dpdk-devbind --status-dev net |  egrep -i --color drv=
+## In my case, I had to run command to bind it to proper driver!:
+# /sbin/dpdk-devbind --bind=igb_uio ens786f0 ens786f1 ens786f2 ens786f3 ens787f0 ens787f1 ens787f2 ens787f3 eno2
+#
+# Alternative method:
+# Just remove the bridge and re-create everything on startup just to be
 # sure.  This script can be used again to setup the DPDK enabled OVS bridge
 # after a reboot/shutdown.
 

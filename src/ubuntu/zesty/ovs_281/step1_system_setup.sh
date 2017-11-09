@@ -32,7 +32,7 @@ update-alternatives --config python
 update-alternatives --install /usr/bin/pip pip /usr/bin/pip3 3
 
 # Show the versions of installed Open vSwitch packages
-dpkg -l openvswitch-common openvswitch-pki openvswitch-switch python-openvswitch openvswitch-switch-dpdk
+dpkg -l openvswitch-common openvswitch-pki openvswitch-switch openvswitch-testcontroller python-openvswitch openvswitch-switch-dpdk dpdk dpdk-dev dpdk-doc dpdk-igb-uio-dkms
 
 # Module settings may have to be tuned based on drivers required for Network interfaces used
 echo "igb_uio" >> /etc/modules
