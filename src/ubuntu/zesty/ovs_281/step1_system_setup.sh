@@ -41,7 +41,7 @@ echo "uio_pci_generic" >> /etc/modules
 
 # Enable DPDK interfaces
 echo "pci     0000:04:00.0    vfio-pci" >> /etc/dpdk/interfaces
-echo "pci	    0000:04:00.1    uio_pci_generic" >> /etc/dpdk/interfaces
+echo "pci     0000:04:00.1    uio_pci_generic" >> /etc/dpdk/interfaces
 echo "## Interfaces on this machine that needs to be loaded on (re)boot" >> /etc/dpdk/interfaces
 echo "pci     0000:03:00.1    igb_uio" >> /etc/dpdk/interfaces
 echo "pci     0000:05:00.0    igb_uio" >> /etc/dpdk/interfaces
@@ -74,6 +74,6 @@ echo " to reserve 4 huge pages of 1G size - add parameters: default_hugepagesz=1
 echo " For 2 CPU cores, Isolate CPU cores which will be used for DPDK - add parameters: isolcpus=2"
 echo " To use VFIO - add parameters: iommu=pt intel_iommu=on"
 echo "Note: If you are not sure about something, leave it asis!!"
-echo -e "\033[47m  \033[1;91m GRUB_CMDLINE_LINUX_DEFAULT=\"quiet intel_iommu=on iommu=pt default_hugepagesz=1G hugepagesz=1G hugepages=4\" \033[0m"
-echo -e "After changing /etc/default/grub, run command: \033[47m  \033[1;91m update-grub \033[0m"
-echo -e "\033[47m  \033[1;91m reboot \033[0m system for changes to take effect."
+echo "\033[47m  \033[1;91m GRUB_CMDLINE_LINUX_DEFAULT=\"quiet intel_iommu=on iommu=pt default_hugepagesz=1G hugepagesz=1G hugepages=4\" \033[0m"
+echo "After changing /etc/default/grub, run command: \033[47m  \033[1;91m update-grub \033[0m"
+echo "\033[47m  \033[1;91m reboot \033[0m system for changes to take effect."
