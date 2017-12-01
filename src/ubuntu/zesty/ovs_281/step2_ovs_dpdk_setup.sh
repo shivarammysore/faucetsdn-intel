@@ -130,7 +130,7 @@ ovs-vsctl add-port $BRIDGE_NAME $HOST_IFACE_9 -- set Interface $HOST_IFACE_9 typ
 
 ovs-vsctl show
 echo "Mapping of OpenFlow port number for a given port ..."
-ovs-vsctl -- --columns=name,ofport list Interface
+ovs-vsctl --format=table --columns=name,ofport,ifIndex,link_state,options,type,link_speed list Interface
 echo "Get Datapath ID of the bridge ..."
 ovs-vsctl get bridge $BRIDGE_NAME datapath_id
 echo "... Information on how bridge is configured ..."
